@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taste of Kaen | Complete Digital Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Sarabun:wght@200;300;400;600&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+   
+    <style>
+        :root {
+            /* --- [ LAB: FONT & THEME COLORS ] --- */
+            --primary-brown: #8D745B;
+            --gold-accent: #C4A15A;
+            --thai-text: #666666;
+            --white: #ffffff;
+            --cream-bg: #F4F2EE;
+            --dark-footer: #1a1a1a;
+            --overlay-dark: rgba(0,0,0,0.4);
+        }
+
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; background-color: #f0f0f0; }
+
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 100%; /* ขยายเต็มหน้าจอ */
+            margin: 0 auto;
+            background-color: var(--white);
+            min-height: 100vh;
+        }
+
+
+        section { width: 100%; position: relative; overflow: hidden; }
+
+
+        /* --- Reusable Hero --- */
+        .section-hero {
+            position: relative; height: 250px; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center;
+        }
+        .section-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+        .section-hero .overlay { position: absolute; inset: 0; background: var(--overlay-dark); z-index: 2; }
+        .section-hero h2 { position: relative; z-index: 3; font-family: 'Playfair Display', serif; font-size: 50px; margin: 0; color: var(--gold-accent); }
+        .section-hero span { position: relative; z-index: 3; letter-spacing: 5px; font-size: 14px; }
+
+
+        /* --- 1. COVER PAGE --- */
+        .sec-cover { background-color: #DDE2E7; padding: 60px 20px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .logo-font { font-family: 'Mrs Saint Delafield', cursive; font-size: 90px; margin: 0; color: var(--primary-brown); }
+        .cover-content h3 { color: var(--primary-brown); font-size: 18px; margin-top: 20px; border-bottom: 1px solid var(--gold-accent); display: inline-block; padding-bottom: 5px; }
+        .cover-desc { font-size: 14px; color: #444; line-height: 1.6; margin: 8px 0; }
+
+
+        /* --- 2. RECOMMENDED (5 เมนู) --- */
+        .rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; background: #333; }
+        .rec-item { position: relative; height: 300px; overflow: hidden; }
+        .rec-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .rec-item:hover img { transform: scale(1.1); }
+        .rec-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; }
+
+
+        /* --- 3. SIGNATURE (4 เมนู) --- */
+        .sec-signature { background-color: var(--primary-brown); padding-bottom: 50px; }
+        .sig-list { padding: 40px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+        .sig-item { display: flex; align-items: center; gap: 20px; color: white; }
+        .sig-item.reverse { flex-direction: row-reverse; text-align: right; }
+        .sig-oval { width: 220px; height: 160px; border-radius: 50% / 35%; border: 2px solid var(--gold-accent); overflow: hidden; flex-shrink: 0; }
+        .sig-oval img { width: 100%; height: 100%; object-fit: cover; }
+
+
+        /* --- 4. SALAD (7 เมนู + Collage) --- */
+        .sec-salad { background-color: var(--cream-bg); }
+        .salad-collage { position: relative; height: 500px; background: #A3938B; overflow: hidden; width: 100%; }
+        .c-img { position: absolute; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); object-fit: cover; }
+        .menu-list { padding: 40px 15%; background-color: var(--cream-bg); }
+        .menu-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 0.5px solid #ddd; align-items: center; }
+        .menu-row strong { color: #333; font-size: 16px; display: block; }
+        .m-th { font-size: 13px; color: var(--thai-text); }
+        .m-price { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--primary-brown); font-size: 20px; }
+
+
+        /* --- 5. SOUP (3 เมนู) --- */
+        .sec-soup { background-color: #FDFBFA; padding-bottom: 60px; }
+        .soup-grid { display: grid; grid-template-columns: 1.3fr 1fr; height: 350px; }
+        .soup-grid img { width: 100%; height: 100%; object-fit: cover; }
+        .soup-item-row { display: flex; align-items: center; max-width: 900px; margin: 40px auto; width: 90%; }
+        .circle-food { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; z-index: 2; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .gold-bar { background-color: var(--gold-accent); color: #000; padding: 25px 40px 25px 80px; margin-left: -70px; flex: 1; display: flex; justify-content: space-between; align-items: center; z-index: 1; }
+        .gold-bar.rev { margin-left: 0; margin-right: -70px; padding: 25px 80px 25px 40px; text-align: right; }
+
+
+        footer { background: var(--dark-footer); color: #777; padding: 40px; text-align: center; font-size: 12px; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+
+<div class="app-wrapper">
+   
+    <section class="sec-cover">
+        <img src="p1.jpg" style="position: absolute; top: 50%; left: 100%; transform: translate(-50%, -50%); width: 200%; opacity: 0.15; pointer-events: none;">
+        <div style="position: relative; z-index: 2;">
+            <h1 class="logo-font">Taste of Kaen</h1>
+            <span style="font-family: 'Playfair Display'; letter-spacing: 4px; font-size: 16px; color: var(--primary-brown);">ISAN DISCOVERY</span>
+           
+            <div class="cover-content">
+                <h3>พาเปิบ | Sticky rice and dip</h3>
+                <p class="cover-desc">ข้าวฮางไฟ Brown sticky rice / แจ่วบักแล่น Spicy tomato relish<br>ไส้กรอกอีสาน Isan sausage / เครื่องดื่มบำรุงลำไส้ Probiotic drink</p>
+               
+                <h3>พาจก | Starter</h3>
+                <p class="cover-desc">หลนมันปูปลาร้าก้อน Crab Aranchini<br>สาวขอนแก่น / เสือสกล / หนุ่มชัยภูมิ Signature Cocktail</p>
+               
+                <h3>พาอิ่ม | Main course</h3>
+                <p class="cover-desc">  ตํามันแกวหมูกรอบ Jicama salad with crispy pork belly
+ ลาบเปดกับใส้เปดครองเครง Minced duck breast salad
+ แกงเปรอะไก่ Isan style minestrone
+ ผัดสามหอมกุ ้งหมึก Stir fried seafood with glass noodle
+ ปลาเจียนนําปลา Deep fried fish
+ ไข่ต้มราดนําพริกพีดาว Soft boiled้ duck egg
+ สาโทสด / อ่อน / แก่ House Sato
+</p>
+               
+                <h3>พาเสริม | Suplement to main course</h3>
+                <p class="cover-desc">  ยําส้มโอปูนิม Pomelo salad with soft shell crab 300
+ มัสมันขาแกะ Massaman lamb shank 800</p>
+               
+                <h3>พาหวาน | Dessert</h3>
+                <p class="cover-desc">ไอติมกาละแม ขนมเหนียว ข้าวแต๋น
+ Burnt coconut ice cream and sticky rice dumpling</p>
+
+
+                <div style="margin-top: 30px; border-top: 1.5px solid var(--gold-accent); padding-top: 20px;">
+                    <strong style="font-size: 14px; color: var(--primary-brown);">ชาแก่น และ ขนมชินเล็กๆ Kaen herbal tea and Petit fours
+ รถเข็นสุรา Isan au de vie  ราคา 990++บาท ต่อท่าน : Price 990++ baht per person</strong>
+                    <p style="font-size: 12px; color: #666; margin-top: 10px;">สําหรับทุกท่านทีร่วมโต๊ะ Apply to whole table
+ เครืองดื่มคู่อาหาร 690++ บาทต่อท่าน Beverage : pairing 690++ baht per person</p>
+                    <p style="font-size: 10px; color: #999;"> ราคานียังไม่รวม ภาษีมูลค่าเพิม 7% และ ค่าบริการอีก 7% 
+Tax 7% and service charge 7% are excluded from the price</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="section-hero">
+            <img src="ร้าน.jpg">
+            <div class="overlay"></div>
+            <h2>Recommended</h2>
+            <span>เมนูแนะนำ</span>
+        </div>
+        <div class="rec-grid">
+            <div class="rec-item"><img src="ยำมะม่วงสุกใส่กุ้ง และ กะปิหวาน แนมกับปลาวง.jpg"><div class="rec-label"><strong>Ripe Mango Salad with Shrimp and Sweet Shrimp Paste, served with Crispy Sun-Dried Stingray 
+</strong><br><span>ยำมะม่วงสุกใส่กุ้ง และ กะปิหวาน แนมกับปลาวง</span></div></div>
+            <div class="rec-item"><img src="ไก่และดอกกะหล่ำชุบแป้งทอดฉาบซอสมะม่วงเปรี้ยวหวาน.jpg"><div class="rec-label"><strong>Crispy Chicken and Cauliflower Fritters Glazed with Sweet and Sour Mango Sauce 
+            </strong><br><span>ไก่และดอกกะหล่ำชุบแป้งทอดฉาบซอสมะม่วงเปรี้ยวหวาน</span></div></div>
+            <div class="rec-item"><img src="ขนมจีนซาวน้ำ.jpg"><div class="rec-label"><strong>Khanom Jeen Sao Nam (Rice Noodles with Pineapple and Coconut Milk) </strong><br><span>ขนมจีนซาวน้ำ</span></div></div>
+            <div class="rec-item"><img src="ขนมโคนิล.jpg"><div class="rec-label"><strong>Black Sticky Rice Flour Dumplings in Sweetened Coconut Milk (Kanom Kho Nil) </strong><br><span>ขนมโคนิล</span></div></div>
+            <div class="rec-item"><img src="ข้าวเหนียวมูลอัญชัน มะม่วงน้ำดอกไม้สีทอง และไอศกรีมกาละแม.jpg"><div class="rec-label"><strong>Nam Dok Mai Mango with Sweet Sticky Rice</strong><br><span>ข้าวเหนียวมะม่วงน้ำดอกไม้</span></div></div>
+        </div>
+    </section>
+
+
+    <section class="sec-signature">
+        <div class="section-hero">
+            <img src="แก้นอิสาน.jpg">
+            <div class="overlay"></div>
+            <h2>Signature</h2>
+            <span>เมนูพิเศษตามฤดูกาล</span>
+        </div>
+        <div class="sig-list">
+            <div class="sig-item">
+                <div class="sig-oval"><img src="มัสมั่นขาแกะ.jpg"></div>
+                <div><h4>Slow-Cooked Lamb Shank Massaman Curry<br><span style="font-weight: 300;">มัสมั่นขาแกะ</span></h4></div>
+            </div>
+            <div class="sig-item reverse">
+                <div class="sig-oval"><img src="แกงเขียวหวานปลากระพงย่างง.png"></div>
+                <div><h4>Green Curry with Grilled Sea Bass <br><span style="font-weight: 300;">แกงเขียวหวานปลากะพงย่าง</span></h4></div>
+            </div>
+            <div class="sig-item">
+                <div class="sig-oval"><img src="กุ้งแม่น้ำ ผัดเส้นผมนางฟ้าซอสมันกุ้ง.jpg"></div>
+                <div><h4>River Prawn with Angel Hair Pasta in Rich Prawn Fat Sauce <br><span style="font-weight: 300;">กุ้งแม่น้ำ ผัดเส้นผมนางฟ้าซอสมันกุ้ง</span></h4></div>
+            </div>
+            <div class="sig-item reverse">
+                <div class="sig-oval"><img src="ข้าวแช่ วังเดิม.jpg"></div>
+                <div><h4>Khao Chae Wang Derm 
+(Royal Chilled Jasmine Rice) 
+<br><span style="font-weight: 300;">ข้าวแช่ วังเดิม</span></h4></div>
+            </div>
+        </div>
+    </section>
+
+
+        <section class="sec-salad"
+    style="background-color: var(--cream-warm); padding-bottom: 40px;">
+       
+       <div class="salad-collage-container" style="position: relative; height: 500px; background-color: #A3938B; overflow: hidden;">
+    <img src="พื้นหลัง.jpg" alt="Collage Background" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; filter: contrast(1.1);">
+   
+    <div style="position: absolute; top: 30px; left: 20px; z-index: 10; color: #fff; text-shadow: 2px 2px 15px rgba(0,0,0,0.4);">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 52px; margin: 0; color: #C4A15A; line-height: 1;">Salad</h2>
+        <span style="font-size: 18px; letter-spacing: 3px; font-weight: 300; display: block; margin-top: 5px;">ตำกับยำ</span>
+    </div>
+<strong>
+    <img src="salad1.jpg" class="c-img" style="top: 20px; right: 15px; width: 150px; height: 150px; z-index: 5; border: none;">
+   
+    <img src="salad2.jpg" class="c-img" style="top: 130px; left: -30px; width: 220px; height: 220px; z-index: 6; border: none;">
+   
+    <img src="salad3.jpg" class="c-img" style="top: 190px; right: 70px; width: 120px; height: 120px; z-index: 4; border: none;">
+   
+    <img src="หอย2.jpg" class="c-img" style="bottom: 30px; left: 100px; width: 140px; height: 140px; z-index: 7; border: none;">
+   
+    <img src="p17.jpg" class="c-img" style="bottom: 10px; right: -25px; width: 170px; height: 170px; z-index: 5; border: none;">
+</span>
+</div>
+
+
+        <div class="menu-list" style="padding: 25px 25px; background-color: #F4F2EE;">
+            <div class="menu-row">
+                <div><strong>Local Golden Snail with Spicy Sauce and Almond Brittle
+</strong><span class="m-th">เมี่ยงหอยเชอรี่สะดิ้งสีทอง (6คำ)</span></div>
+                <div class="m-price">190</div>
+            </div>
+            <div class="menu-row">
+                <div><strong>Jícama Salad with Crispy Pork Belly
+</strong><span class="m-th">ส้มตำมันแกว ทานคู่กับหมูกรอบ</span></div>
+                <div class="m-price">290</div>
+            </div>
+            <div class="menu-row">
+                <div><strong>Pomelo Salad with Soft Shell Crab
+</strong><span class="m-th">ยำส้มโอปูนิ่ม ทอดกรอบ</span></div>
+                <div class="m-price">350</div>
+            </div>
+            <div class="menu-row">
+                <div><strong>Glass Noodle Salad with Minced Pork and Prawns
+</strong><span class="m-th">ยำวุ้นเส้นโบราณ โรยหน้าปลาข้าวสาร</span></div>
+                <div class="m-price">290</div>
+            </div>
+            <div class="menu-row">
+                <div><strong>Crispy Vermicelli Salad with River Prawn
+</strong><span class="m-th">หมี่กรอบคลุกสด กุ้งแม่น้ำย่าง</span></div>
+                <div class="m-price">950</div>
+            </div>
+            <div class="menu-row">
+                <div><strong>Peppery Grilled Pork Jaw Salad
+</strong><span class="m-th">เห่าดงคอหมูย่าง</span></div>
+                <div class="m-price">290</div>
+            </div>
+            <div class="menu-row">
+                <div><strong>Laab Minced Duck Salad with Crispy Intestines
+</strong><span class="m-th">ลาบเป็ด กับ ไส้เป็ดครองแครง</span></div>
+                <div class="m-price">290</div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <style>
+    /* --- NEW SOUP DESIGN (BASED ON IMAGE) --- */
+    :root {
+        --soup-gold: #B89B6A; /* ปรับสีทองให้ใกล้เคียงกับในรูปภาพ */
+        --text-dark: #1a1a1a;
+    }
+
+
+    .sec-soup-modern {
+        background-color: #ffffff;
+        padding-bottom: 50px;
+        width: 100%;
+    }
+
+
+    /* Collage Header */
+    .soup-collage {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        grid-template-rows: 200px 150px;
+        gap: 5px;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    .soup-collage-main { grid-row: span 2; position: relative; }
+    .soup-collage-main img, .soup-collage-sub img { width: 100%; height: 100%; object-fit: cover; }
+   
+    .soup-header-text {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        z-index: 10;
+        color: var(--soup-gold);
+    }
+    .soup-header-text h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 70px;
+        margin: 0;
+        line-height: 1;
+    }
+    .soup-header-text span {
+        color: #fff;
+        font-size: 24px;
+        display: block;
+        margin-left: 100px;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+
+    /* Soup Item Rows */
+    .soup-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        width: 100%;
+        max-width: 1000px; /* จำกัดความกว้างเพื่อความสวยงามตามแบบ */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .soup-row.reverse { flex-direction: row-reverse; }
+
+
+    .soup-circle {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        overflow: hidden;
+        z-index: 2;
+        flex-shrink: 0;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border: 2px solid #fff;
+    }
+    .soup-circle img { width: 100%; height: 100%; object-fit: cover; 
+        transform: scale(1.3); /* 1.3 คือขยายขึ้น 30% ถ้าอยากให้ซูมอีกก็เพิ่มเป็น 1.4, 1.5 */
+    transition: transform 0.3s; /* ใส่ไว้เพื่อให้รูปดูนุ่มนวล */
+}
+
+
+    /* แถบสีทองโค้งฝั่งเดียวตามแบบ */
+    .soup-bar {
+        background-color: var(--soup-gold);
+        height: 160px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 40px 0 100px;
+        margin-left: -80px; /* ให้รูปวงกลมทับแถบ */
+        border-radius: 0 80px 80px 0; /* โค้งมนเฉพาะฝั่งขวา */
+        position: relative;
+        z-index: 1;
+    }
+
+
+    .soup-row.reverse .soup-bar {
+        margin-left: 0;
+        margin-right: -80px; /* สลับฝั่งทับ */
+        padding: 0 100px 0 40px;
+        border-radius: 80px 0 0 80px; /* โค้งมนเฉพาะฝั่งซ้าย */
+        text-align: left; /* ข้อความอยู่ฝั่งซ้ายตามรูป */
+    }
+
+
+    .soup-bar h4 {
+        font-size: 22px;
+        margin: 0;
+        font-weight: 500;
+        font-family: 'Playfair Display', serif;
+        color: var(--text-dark);
+    }
+    .soup-bar p {
+        font-size: 16px;
+        margin: 5px 0 0 0;
+        color: var(--text-dark);
+        opacity: 0.9;
+    }
+    .soup-bar .price {
+        position: absolute;
+        bottom: 20px;
+        right: 40px;
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+    .soup-row.reverse .soup-bar .price {
+        left: 40px;
+        right: auto;
+    }
+
+
+    .soup-footer-note {
+        text-align: center;
+        font-size: 11px;
+        color: #777;
+        padding: 20px;
+        line-height: 1.5;
+    }
+
+
+    /* ปรับแต่งสำหรับมือถือ */
+    @media (max-width: 600px) {
+        .soup-circle { width: 180px; height: 180px; }
+        .soup-bar { height: 140px; padding-left: 60px; padding-right: 20px; }
+        .soup-row.reverse .soup-bar { padding-right: 60px; padding-left: 20px; }
+        .soup-bar h4 { font-size: 16px; }
+        .soup-bar p { font-size: 13px; }
+        .soup-header-text h2 { font-size: 50px; }
+    }
+</style>
+
+
+<section class="sec-soup-modern">
+    <div class="soup-collage">
+        <div class="soup-header-text">
+            <h2>Soup</h2>
+            <span>ซดน้ำ</span>
+        </div>
+        <div class="soup-collage-main"><img src="ปลา.jpg"></div>
+        <div class="soup-collage-sub"><img src="เหลือง.jpg"></div>
+        <div class="soup-collage-sub"><img src="ซด.jpg"></div>
+    </div>
+
+    <div id="soup-list">
+        <p style="text-align:center; padding: 20px;">กำลังโหลดเมนู...</p>
+    </div>
+
+    <div class="soup-footer-note">
+        ราคานี้ยังไม่รวม ภาษีมูลค่าเพิ่ม 7% และ ค่าบริการอีก 7%<br>
+        Tax 7% and service charge 7% are excluded from the price
+    </div>
+</section>
+
+<footer>
+    <p>TASTE OF KAEN | EXQUISITE ISAN EXPERIENCE</p>
+    <p style="margin-top: 10px; opacity: 0.5;">Tax 7% and Service Charge 7% are excluded from the price.</p>
+</footer>
+
+</div> <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBAbX66yprs4AJevonD3kcUES85nmGEddY",
+    authDomain: "taste-of-kaen.firebaseapp.com",
+    projectId: "taste-of-kaen",
+    storageBucket: "taste-of-kaen.firebasestorage.app",
+    messagingSenderId: "287200906309",
+    appId: "1:287200906309:web:ab23670449b2ff75a7a72c",
+    measurementId: "G-12XSNTVDBV"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function loadSoups() {
+    const soupList = document.getElementById('soup-list');
+    try {
+      // ดึงข้อมูลจากคอลเลกชันชื่อ soup (ต้องสะกดให้ตรงกับใน Firebase นะครับ)
+      const q = query(collection(db, "soup"), orderBy("id", "asc"));
+      const querySnapshot = await getDocs(q);
+      
+      let htmlContent = '';
+      querySnapshot.forEach((doc) => {
+        const item = doc.data();
+        // ใช้รูปแบบ class ตามที่คุณเขียน CSS ไว้
+        htmlContent += `
+          <div class="soup-row ${item.is_reverse ? 'reverse' : ''}">
+              <div class="soup-circle"><img src="${item.image_url}"></div>
+              <div class="soup-bar">
+                  <h4>${item.name_en}</h4>
+                  <p>${item.name_th}</p>
+                  <div class="price">${item.price}</div>
+              </div>
+          </div>
+        `;
+      });
+      soupList.innerHTML = htmlContent;
+    } catch (e) {
+      console.error("Error:", e);
+      soupList.innerHTML = "ไม่สามารถโหลดข้อมูลได้";
+    }
+  }
+
+  loadSoups();
+</script>
+
+</body>
+</html>
